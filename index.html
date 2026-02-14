@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Malkay Husna ❤️</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  color:black;
+  text-align:center;
+  overflow:hidden;
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.container{
+  width:90%;
+  max-width:600px;
+  padding:20px;
+  position:relative;
+  z-index:10;
+  background: rgba(255,255,255,0.25);
+  border-radius:20px;
+  backdrop-filter: blur(8px);
+}
+
+.top-paragraph{
+  font-size:20px;
+  line-height:1.6;
+  margin-bottom:25px;
+  animation:fadeIn 2s ease-in-out;
+  font-weight:bold;
+}
+
+#confession{
+  font-size:20px;
+  line-height:1.6;
+  margin-bottom:20px;
+  min-height:120px;
+}
+
+#question{
+  font-size:28px;
+  margin:20px 0;
+  display:none;
+}
+
+.buttons{
+  display:none;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+button{
+  font-size:18px;
+  padding:10px 20px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  background:linear-gradient(45deg,#ff6b6b,#feca57);
+  color:black;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+#response{
+  font-size:22px;
+  margin-top:20px;
+  display:none;
+}
+
+.heart{
+  position:fixed;
+  font-size:24px;
+  animation:float 6s linear infinite;
+  pointer-events:none;
+}
+
+.burst-heart{
+  position:fixed;
+  font-size:20px;
+  pointer-events:none;
+  z-index:999;
+}
+
+.spark{
+  position:fixed;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:gold;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh);}
+  100%{transform:translateY(-120vh);}
+}
+
+@keyframes fadeIn{
+  from{opacity:0;}
+  to{opacity:1;}
+}
+
+#muteBtn{
+  position:fixed;
+  top:15px;
+  right:15px;
+  background:white;
+  border:none;
+  border-radius:50%;
+  width:45px;
+  height:45px;
+  font-size:20px;
+  cursor:pointer;
+  z-index:20;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
+
+<button id="muteBtn">🔇</button>
+
+<div class="container">
+
+<p class="top-paragraph">
+میں اپنا دل کی سچائیوں کے ساتھ یہ اقرار کرتا ہوں <br>
+کہ میں تم سے پیار کرتا ہوں ❤️
+</p>
+
+<div id="confession"></div>
+
+<div id="question">👉 Malkay Husna, do you love me?</div>
+
+<div class="buttons">
+<button id="yesBtn">💖 Yes</button>
+<button id="noBtn">😅 No</button>
+</div>
+
+<div id="response"></div>
+
+</div>
+
+<script>
+const textLines=[
+"Malkay Husna…",
+"I don’t know how to say this perfectly…",
+"But my heart has been wanting to tell you something for a long time.",
+"You became special to me without me realizing it…",
+"Your smile stays in my thoughts…",
+"Your presence makes my world lighter…",
+"Somewhere along the way…",
+"I think I fell for you ❤️"
+];
+
+const confession=document.getElementById("confession");
+const question=document.getElementById("question");
+const buttons=document.querySelector(".buttons");
+const response=document.getElementById("response");
+const yesBtn=document.getElementById("yesBtn");
+const noBtn=document.getElementById("noBtn");
+const bgMusic=document.getElementById("bgMusic");
+const muteBtn=document.getElementById("muteBtn");
+
+let line=0;
+let char=0;
+
+/* Typing Effect */
+function typeEffect(){
+  if(line<textLines.length){
+    if(char<textLines[line].length){
+      confession.innerHTML+=textLines[line].charAt(char);
+      char++;
+      setTimeout(typeEffect,40);
+    }else{
+      confession.innerHTML+="<br><br>";
+      line++;
+      char=0;
+      setTimeout(typeEffect,600);
+    }
+  }else{
+    question.style.display="block";
+    buttons.style.display="flex";
+  }
+}
+
+/* Floating Hearts */
+function floatingHearts(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+}
+setInterval(floatingHearts,1200);
+
+/* Fireworks */
+function createFireworks(){
+  for(let i=0;i<40;i++){
+    const spark=document.createElement("div");
+    spark.className="spark";
+    spark.style.left=Math.random()*100+"vw";
+    spark.style.top=Math.random()*100+"vh";
+    document.body.appendChild(spark);
+
+    const dx=Math.random()*200-100;
+    const dy=Math.random()*200-100;
+    let start=null;
+
+    function animate(time){
+      if(!start)start=time;
+      const progress=(time-start)/600;
+      spark.style.transform=`translate(${dx*progress}px,${dy*progress}px)`;
+      spark.style.opacity=1-progress;
+      if(progress<1){
+        requestAnimationFrame(animate);
+      }else{
+        spark.remove();
+      }
+    }
+    requestAnimationFrame(animate);
+  }
+}
+
+/* Heart Burst on YES */
+function heartBurst(){
+  for(let i=0;i<80;i++){
+    const heart=document.createElement("div");
+    heart.className="burst-heart";
+    heart.innerHTML="💖";
+
+    const startX=window.innerWidth/2;
+    const startY=window.innerHeight/2;
+
+    heart.style.left=startX+"px";
+    heart.style.top=startY+"px";
+
+    document.body.appendChild(heart);
+
+    const angle=Math.random()*2*Math.PI;
+    const distance=Math.random()*400+100;
+
+    const x=Math.cos(angle)*distance;
+    const y=Math.sin(angle)*distance;
+
+    heart.animate([
+      {transform:"translate(0,0)",opacity:1},
+      {transform:`translate(${x}px,${y}px)`,opacity:0}
+    ],{
+      duration:1000,
+      easing:"ease-out"
+    });
+
+    setTimeout(()=>heart.remove(),1000);
+  }
+}
+
+/* YES Button Click */
+yesBtn.onclick=function(){
+  response.innerHTML="I love you Malkay Husna ❤️ Forever & Always 💍";
+  response.style.display="block";
+  buttons.style.display="none";
+  question.style.display="none";
+
+  heartBurst();
+  createFireworks();
+};
+
+/* NO Button Move */
+function moveNo(){
+  const x=Math.random()*(window.innerWidth-120);
+  const y=Math.random()*(window.innerHeight-60);
+  noBtn.style.position="fixed";
+  noBtn.style.left=x+"px";
+  noBtn.style.top=y+"px";
+}
+noBtn.onmouseover=moveNo;
+noBtn.ontouchstart=moveNo;
+
+/* Music Mute Toggle */
+muteBtn.onclick=function(){
+  if(bgMusic.paused){
+    bgMusic.play();
+    muteBtn.innerHTML="🔊";
+  }else{
+    bgMusic.pause();
+    muteBtn.innerHTML="🔇";
+  }
+};
+
+/* Autoplay on first click */
+document.body.addEventListener("click",()=>{
+  bgMusic.play().catch(()=>{});
+},{once:true});
+
+/* Start typing */
+typeEffect();
+</script>
+
+</body>
+</html>
